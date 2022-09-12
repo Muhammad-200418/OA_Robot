@@ -1,1 +1,2 @@
-# OA_Robot
+# Ashooq
+A semi-autonomous, obstacle avoidance robot.
