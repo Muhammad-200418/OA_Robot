@@ -81,7 +81,6 @@
   :Date: 06/04/2020
 */
  
- 
 /*define the sensor's pins*/
 uint8_t lefttrigPin = 53;
 uint8_t leftechoPin = A0;
