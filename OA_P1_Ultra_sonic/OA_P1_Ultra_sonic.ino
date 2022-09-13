@@ -83,8 +83,20 @@
  
  
 /*define the sensor's pins*/
-uint8_t trigPin = 3;
-uint8_t echoPin = 2;
+uint8_t lefttrigPin = 53;
+uint8_t leftechoPin = A0;
+
+uint8_t cenlefttrigPin = 51;
+uint8_t cenleftechoPin = A1;
+
+uint8_t centrigPin = 49;
+uint8_t cenechoPin = A2;
+
+uint8_t cenrighttrigPin = 47;
+uint8_t cenrightechoPin = A3;
+
+uint8_t righttrigPin = 45;
+uint8_t rightechoPin = A4;
  
 unsigned long timerStart = 0;
 int TIMER_TRIGGER_HIGH = 10;
@@ -112,8 +124,8 @@ bool isTimerReady(int mSec) {
 /*Sets the data rate in bits per second and configures the pins */
 void setup() {
   Serial.begin(9600);
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
+  pinMode(lefttrigPin, OUTPUT);
+  pinMode(leftechoPin, INPUT);
 }
  
 void loop() {
@@ -122,7 +134,7 @@ void loop() {
   switch (_sensorState) {
     /* Start with LOW pulse to ensure a clean HIGH pulse*/
     case TRIG_LOW: {
-        digitalWrite(trigPin, LOW);
+        digitalWrite(lefttrigPin, LOW);
         startTimer();
         if (isTimerReady(TIMER_LOW_HIGH)) {
           _sensorState = TRIG_HIGH;
@@ -131,7 +143,7 @@ void loop() {
       
     /*Triggered a HIGH pulse of 10 microseconds*/
     case TRIG_HIGH: {
-        digitalWrite(trigPin, HIGH);
+        digitalWrite(lefttrigPin, HIGH);
         startTimer();
         if (isTimerReady(TIMER_TRIGGER_HIGH)) {
           _sensorState = ECHO_HIGH;
@@ -140,8 +152,8 @@ void loop() {
  
     /*Measures the time that ping took to return to the receiver.*/
     case ECHO_HIGH: {
-        digitalWrite(trigPin, LOW);
-        timeDuration = pulseIn(echoPin, HIGH);
+        digitalWrite(lefttrigPin, LOW);
+        timeDuration = pulseIn(leftechoPin, HIGH);
         /*
            distance = time * speed of sound
            speed of sound is 340 m/s => 0.034 cm/us
