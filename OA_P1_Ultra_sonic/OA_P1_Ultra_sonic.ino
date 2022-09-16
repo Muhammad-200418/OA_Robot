@@ -1,77 +1,3 @@
-// // Includeing Libraries
-// #include "NewPing.h"
-
-// // Hook up HC-SR04 with Trig to Arduino Pin 9, Echo to Arduino pin 10
-// //Defining Triggers/Echo pins for sonars
-// #define Left_Trigger_Pin A14
-// #define Left_Echo_Pin A15
-
-// #define Cen_Left_Trigger_Pin A14
-// #define Cen_Left_Echo_Pin A15
-
-// #define Cen_Trigger_Pin A14
-// #define Cen_Echo_Pin A15
-
-// #define Cen_Right_Trigger_Pin A14
-// #define Cen_Right_Echo_Pin A15
-
-// #define Right_Trigger_Pin A14
-// #define Right_Echo_Pin A15
-
-// // Maximum distance we want to ping for (in centimeters).
-// #define Max_Distance 100	
-
-// // NewPing setup of pins and maximum distance.
-// NewPing Left_Sonar(Left_Trigger_Pin, Left_Echo_Pin, Max_Distance);
-// NewPing Cen_Left_Sonar(Cen_Left_Trigger_Pin, Cen_Left_Echo_Pin, Max_Distance);
-// NewPing Cen_Sonar(Cen_Trigger_Pin, Cen_Echo_Pin, Max_Distance);
-// NewPing Cen_Right_Sonar(Cen_Right_Trigger_Pin, Cen_Right_Echo_Pin, Max_Distance);
-// NewPing Right_Sonar(Right_Trigger_Pin, Right_Echo_Pin, Max_Distance);
-
-
-// void setup() {
-// 	Serial.begin(9600);
-// }
-
-// void loop() {
-// 	// Serial.print("Distance = ");
-// 	// Serial.print(sonar.ping_cm());
-// 	// Serial.println(" cm");
-// 	// delay(500);
-// }
-// void Left_sonar_ping() {
-//   Serial.print("This is the left Sonar. Distance = ");
-// 	Serial.print(Left_Sonar.ping_cm());
-// 	Serial.println(" cm");
-// 	delay(500);
-// }
-// void Cen_Left_sonar_ping() {
-//   Serial.print("This is the Center left Sonar. Distance = ");
-// 	Serial.print(Cen_Left_Sonar.ping_cm());
-// 	Serial.println(" cm");
-// 	delay(500);
-// }
-// void Cen_sonar_ping() {
-//   Serial.print("This is the Cenetr Sonar. Distance = ");
-// 	Serial.print(Cen_Sonar.ping_cm());
-// 	Serial.println(" cm");
-// 	delay(500);
-// }
-// void Cen_Right_sonar_ping() {
-//   Serial.print("This is the Center Right Sonar. Distance = ");
-// 	Serial.print(Cen_Right_Sonar.ping_cm());
-// 	Serial.println(" cm");
-// 	delay(500);
-// }
-// void Right_sonar_ping() {
-//   Serial.print("This is the Right Sonar. Distance = ");
-// 	Serial.print(Right_Sonar.ping_cm());
-// 	Serial.println(" cm");
-// 	delay(500);
-// }
-
-// This Is the old code. Sensors failed to operate normally once installed.
-// Therfore we are going to switch to a new code ofund on the internet.
 
 /*
   :Version 1.0
@@ -101,7 +27,17 @@ unsigned long timerStart = 0;
 int TIMER_TRIGGER_HIGH = 10;
 int TIMER_LOW_HIGH = 2;
  
-float timeDuration, distance;
+float left_time;
+float cenleft_time;
+float cen_time;
+float cenright_time;
+float right_time;
+
+float left_distance;
+float cenleft_distance;
+float cen_distance;
+float cenright_distance;
+float right_distance;
  
 /*The states of an ultrasonic sensor*/
 enum SensorStates {
@@ -125,6 +61,18 @@ void setup() {
   Serial.begin(9600);
   pinMode(lefttrigPin, OUTPUT);
   pinMode(leftechoPin, INPUT);
+
+  pinMode(cenlefttrigPin, OUTPUT);
+  pinMode(cenleftechoPin, INPUT);
+  
+  pinMode(centrigPin, OUTPUT);
+  pinMode(cenechoPin, INPUT);
+  
+  pinMode(cenrighttrigPin, OUTPUT);
+  pinMode(cenrightechoPin, INPUT);
+  
+  pinMode(righttrigPin, OUTPUT);
+  pinMode(rightechoPin, INPUT);
 }
  
 void loop() {
@@ -134,6 +82,11 @@ void loop() {
     /* Start with LOW pulse to ensure a clean HIGH pulse*/
     case TRIG_LOW: {
         digitalWrite(lefttrigPin, LOW);
+        digitalWrite(cenlefttrigPin, LOW);
+        digitalWrite(centrigPin, LOW);
+        digitalWrite(cenrighttrigPin, LOW);
+        digitalWrite(righttrigPin, LOW);
+
         startTimer();
         if (isTimerReady(TIMER_LOW_HIGH)) {
           _sensorState = TRIG_HIGH;
@@ -143,6 +96,10 @@ void loop() {
     /*Triggered a HIGH pulse of 10 microseconds*/
     case TRIG_HIGH: {
         digitalWrite(lefttrigPin, HIGH);
+        digitalWrite(cenlefttrigPin, HIGH);
+        digitalWrite(centrigPin, HIGH);
+        digitalWrite(cenrighttrigPin, HIGH);
+        digitalWrite(righttrigPin, HIGH);
         startTimer();
         if (isTimerReady(TIMER_TRIGGER_HIGH)) {
           _sensorState = ECHO_HIGH;
@@ -152,14 +109,49 @@ void loop() {
     /*Measures the time that ping took to return to the receiver.*/
     case ECHO_HIGH: {
         digitalWrite(lefttrigPin, LOW);
-        timeDuration = pulseIn(leftechoPin, HIGH);
+        left_time = pulseIn(leftechoPin, HIGH);
+        left_distance = left_time * 0.034/2;
+
+        digitalWrite(cenlefttrigPin, LOW);
+        cenleft_time = pulseIn(cenleftechoPin, HIGH);
+        cenleft_distance = cenleft_time * 0.034/2;
+
+        digitalWrite(centrigPin, LOW);
+        cen_time = pulseIn(cenechoPin, HIGH);
+        cen_distance = cen_time * 0.034/2;
+
+        digitalWrite(cenrighttrigPin, LOW);
+        cenright_time = pulseIn(cenrightechoPin, HIGH);
+        cenright_distance = cenright_time * 0.034/2;
+
+        digitalWrite(righttrigPin, LOW);
+        right_time = pulseIn(rightechoPin, HIGH);
+        right_distance = right_time * 0.034/2;
         /*
            distance = time * speed of sound
            speed of sound is 340 m/s => 0.034 cm/us
         */
-        Serial.print("Distance measured is: ");
-        Serial.print(timeDuration * 0.034 / 2);
-        Serial.println(" cm");
+        Serial.print("Distance: ");
+        Serial.print(left_distance);
+        Serial.println(" cm, Left sensor");
+
+        Serial.print("Distance: ");
+        Serial.print(cenleft_distance);
+        Serial.println(" cm, Center Left sensor");
+
+        Serial.print("Distance: ");
+        Serial.print(cen_distance);
+        Serial.println(" cm, Center sensor");
+
+        Serial.print("Distance: ");
+        Serial.print(cenright_distance);
+        Serial.println(" cm, Center Right sensor");
+        
+        Serial.print("Distance: ");
+        Serial.print(right_distance);
+        Serial.println(" cm, Right sensor");
+
+
         _sensorState = TRIG_LOW;
       } break;
       
