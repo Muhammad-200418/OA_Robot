@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "author": "Anonymous maker",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-mega", "id": "mega", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic1",
+      "top": -140.66,
+      "left": -162.56,
+      "attrs": { "distance": "51" }
+    }
+  ],
+  "connections": [
+    [ "ultrasonic1:VCC", "mega:5V", "red", [ "v241.98", "h255.28" ] ],
+    [ "ultrasonic1:GND", "mega:GND.3", "black", [ "h-90.78", "v251.55", "h341.64" ] ],
+    [ "ultrasonic1:TRIG", "mega:22", "green", [ "v0" ] ],
+    [ "ultrasonic1:ECHO", "mega:A1", "yellow", [ "v0" ] ]
+  ],
+  "serialMonitor": { "display": "always", "newline": "lf" }
+}

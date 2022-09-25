@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "author": "Anonymous maker",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-mega", "id": "mega", "top": 76.29, "left": -14.49, "attrs": {} },
+    { "type": "wokwi-hc-sr04", "id": "ultrasonic5", "top": -150.2, "left": 297.27, "attrs": {} },
+    { "type": "wokwi-hc-sr04", "id": "ultrasonic1", "top": -147.3, "left": 115.42, "attrs": {} },
+    { "type": "wokwi-hc-sr04", "id": "ultrasonic2", "top": -151.26, "left": -262.76, "attrs": {} },
+    { "type": "wokwi-hc-sr04", "id": "ultrasonic3", "top": -148.77, "left": -65.25, "attrs": {} },
+    { "type": "wokwi-hc-sr04", "id": "ultrasonic4", "top": -154.78, "left": 488.75, "attrs": {} }
+  ],
+  "connections": [
+    [ "ultrasonic5:VCC", "mega:5V", "red", [ "v376.13", "h-284.24" ] ],
+    [ "ultrasonic2:VCC", "ultrasonic3:VCC", "red", [ "v20.2", "h197.51" ] ],
+    [ "ultrasonic3:VCC", "ultrasonic1:VCC", "red", [ "v17.71", "h180.67" ] ],
+    [ "ultrasonic1:VCC", "ultrasonic5:VCC", "red", [ "v15.89", "h113.92" ] ],
+    [ "ultrasonic5:VCC", "ultrasonic4:VCC", "red", [ "v19.14", "h191.48" ] ],
+    [ "ultrasonic4:GND", "ultrasonic5:GND", "black", [ "v50.91", "h-191.48" ] ],
+    [ "ultrasonic5:GND", "ultrasonic1:GND", "black", [ "v47.13", "h-181.85" ] ],
+    [ "ultrasonic3:GND", "ultrasonic2:GND", "black", [ "v44.85", "h-25.07" ] ],
+    [ "ultrasonic3:GND", "ultrasonic1:GND", "black", [ "v44.9", "h180.67" ] ],
+    [ "ultrasonic5:GND", "mega:GND.3", "black", [ "v366.16", "h-223.46" ] ],
+    [ "ultrasonic2:TRIG", "mega:53", "cyan", [ "v402.14", "h596.94", "v-107.59" ] ],
+    [ "ultrasonic3:TRIG", "mega:51", "cyan", [ "v386.36", "h388.85", "v-103.8" ] ],
+    [ "ultrasonic1:TRIG", "mega:49", "cyan", [ "h214.53", "v271.34" ] ],
+    [ "ultrasonic5:TRIG", "mega:47", "cyan", [ "h24.92", "v264.74" ] ],
+    [ "ultrasonic4:TRIG", "mega:45", "cyan", [ "v0" ] ],
+    [ "ultrasonic4:ECHO", "mega:A4", "gold", [ "v362.55", "h-125.2" ] ],
+    [ "ultrasonic5:ECHO", "mega:A3", "gold", [ "v352.65", "h-162.07" ] ],
+    [ "ultrasonic1:ECHO", "mega:A2", "gold", [ "h10.23", "v313.51", "h0", "v0.08" ] ],
+    [ "ultrasonic3:ECHO", "mega:A1", "gold", [ "v97.3", "h95.66" ] ],
+    [ "ultrasonic2:ECHO", "mega:A0", "gold", [ "v339.66", "h369.21" ] ]
+  ]
+}
