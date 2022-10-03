@@ -45,7 +45,6 @@ float cen_distance_final;
 float cenright_distance_final;
 float right_distance_final;
 int count;
-// int us_distance[5];
 int sensors_reading[5];
 
 /*The states of an ultrasonic sensor*/
@@ -83,8 +82,6 @@ void setup() {
   pinMode(righttrigPin, OUTPUT);
   pinMode(rightechoPin, INPUT);
 
-  // int us_distance[5] = {us_sensors()};
-  // Serial.print(us_distance[1]);
   us_sensors();
   for(int i=0; i <5; i++){
     Serial.print(sensors_reading[i]);
@@ -94,7 +91,6 @@ void setup() {
  
 int us_sensors() {
   for (int iter = 0; iter< 31; iter++) {
-    // Serial.print(iter);
     /*Switch between the ultrasonic sensor states*/
     switch (_sensorState) {
       /* Start with LOW pulse to ensure a clean HIGH pulse*/
@@ -151,58 +147,14 @@ int us_sensors() {
           right_distance = right_time * 0.034/2;
           right_distance_final = right_distance_final + right_distance;
 
-
           count = count + 1;
-          /*
-            distance = time * speed of sound
-            speed of sound is 340 m/s => 0.034 cm/us
-          */
-          // Serial.print("Average Distance of left sensor is: ");
-          // Serial.print(left_distance_final/count);
-          // Serial.println(" cm, Left sensor"); 
-          
-          // Serial.print("Average Distance of cenleft_distance is: ");
-          // Serial.print(cenleft_distance_final/count);
-          // Serial.println(" cm, Center Left sensor"); 
 
-          // Serial.print("Average Distance of cen_distance_final sensor is: ");
-          // Serial.print(cen_distance_final/count);
-          // Serial.println(" cm, Center sensor"); 
-
-          // Serial.print("Average Distance of cen right sensor is: ");
-          // Serial.print(cenright_distance_final/count);
-          // Serial.println(" cm, Center Right sensor"); 
-
-          // Serial.print("Average Distance of right_distance_final sensor is: ");
-          // Serial.print(right_distance_final/count);
-          // Serial.println(" cm, Right sensor"); 
-
-          // Serial.print("Distance: ");
-          // Serial.print(left_distance);
-          // Serial.println(" cm, Left sensor");
-
-          // Serial.print("Distance: ");
-          // Serial.print(cenleft_distance);
-          // Serial.println(" cm, Center Left sensor");
-
-          // Serial.print("Distance: ");
-          // Serial.print(cen_distance);
-          // Serial.println(" cm, Center sensor");
-
-          // Serial.print("Distance: ");
-          // Serial.print(cenright_distance);
-          // Serial.println(" cm, Center Right sensor");
-          
-          // Serial.print("Distance: ");
-          // Serial.print(right_distance);
-          // Serial.println(" cm, Right sensor");
           _sensorState = TRIG_LOW;
         } break;
         
     }//end switch
   
   }//end loop
-  // sensors_reading[5] = {left_distance_final/count,cenleft_distance_final/count,cen_distance_final/count,,};
   sensors_reading[0] = left_distance_final/count;
   sensors_reading[1] = cenleft_distance_final/count;
   sensors_reading[2] = cen_distance_final/count;
@@ -210,19 +162,11 @@ int us_sensors() {
   sensors_reading[4] = right_distance_final/count;
 
   left_distance_final = 0;
-
   cenleft_distance_final = 0;
-
   cen_distance_final = 0;
-
   cenright_distance_final = 0;
-
   right_distance_final = 0;
-
   count = 0;
-
-  
-  // return &sensors_reading;
 }
 
 void loop(){
